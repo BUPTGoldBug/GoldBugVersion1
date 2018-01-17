@@ -1,24 +1,38 @@
 package com.debugger.controller;
 
-import org.apache.catalina.User;
-
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import com.debugger.service.UserService;
 
 
-import org.springframework.context.annotation.Configuration;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Configuration
-@EnableAutoConfiguration
+
 @RestController
 @RequestMapping("/")
 public class MainController {
+    @Autowired
+    private UserService userServiceImp;
+
 
     @RequestMapping("getUser")
-    public User getUser(){
+    @ResponseBody
+    public com.debugger.pojo.User getUser(@RequestBody com.debugger.pojo.User user,HttpServletRequest httpServletRequest){
+        com.debugger.pojo.User user1;
+        user1=userServiceImp.getUser(user.getUserId());
+        if(user1!=null){
+            return user1;
 
-    return  null;
+        }else {
+            return new com.debugger.pojo.User();
+
+        }
+
+
 
     }
 
