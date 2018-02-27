@@ -1,6 +1,7 @@
 com\debugger\Application.class
 com\debugger\service\UserService.class
 com\debugger\dao\UserDao.class
+com\debugger\pojo\UserListPojo.class
 com\debugger\pojo\User.class
 com\debugger\service\imp\UserServiceImp.class
 com\debugger\controller\MainController.class
