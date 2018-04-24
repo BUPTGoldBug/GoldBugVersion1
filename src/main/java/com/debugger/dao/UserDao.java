@@ -1,6 +1,6 @@
 package com.debugger.dao;
 
-import com.debugger.pojo.User;
+import com.debugger.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

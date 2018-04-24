@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.debugger.dao.BugDao">
+    <!--
+      int insertBugInfo(Buginfo buginfo);
+     int insertBugInfo2(Buginfo2 buginfo2);
+     int insertContent(Content content);
+     Content getOneBugContent(int bugId);
+     Buginfo getBugInfo(int bugId);
+     Buginfo2 getBugInfo2(int bugId);
+     List<Buginfo2> getBugsAround(Coordinate coordinate);
+     int updateBug(Buginfo2 buginfo2);
+
+
+     -->
+    <insert id = "insertBugInfo" parameterType="com.debugger.model.Buginfo" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO buginfo (
+            death_time,
+            end_lat,
+            end_lon,
+            if_need_start_time,
+            is_moved,
+            lifecount,
+            planter,
+            start_time,
+            start_lat,
+            start_lon
+        ) VALUES (
+             #{death_time},
+            #{end_lat},
+            #{end_lon},
+            #{if_need_start_time},
+            #{is_moved},
+            #{lifecount},
+            #{planter},
+            #{start_time},
+            #{start_lat},
+            #{start_lon}
+        );
+
+    </insert>
+    <insert id = "insertBugInfo2" parameterType="com.debugger.model.Buginfo2" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO buginfo2 (
+                lat,
+                lifecount,
+                lon,
+                status,
+                bug_id_id
+        ) VALUES (
+                #{lat},
+                #{lifecount},
+                #{lon},
+                #{status},
+                #{bug_id_id}
+        );
+    </insert>
+    <insert id = "insertContent" parameterType="com.debugger.model.Content" useGeneratedKeys="true" keyProperty="id">
+
+    INSERT INTO content (
+
+                    ans_1,
+                    ans_2,
+                    ans_3,
+                    ans_4,
+                    bug_id,
+                    content_type,
+                    description,
+                    key_,
+                    question,
+                    score,
+                    arIndex
+        ) VALUES (
+                  #{ans_1},
+                   #{ans_2},
+                    #{ans_3},
+                    #{ans_4},
+                    #{bug_id},
+                    #{content_type},
+                    #{description},
+                    #{key_},
+                    #{question},
+                    #{score},
+                    #{arIndex}
+        );
+
+
+
+    </insert>
+    <select id="getOneBugContent" parameterType="int" resultType="com.debugger.model.Content">
+        SELECT * FROM content WHERE bug_id  = #{0};
+
+
+    </select>
+    <select id="getBugInfo" parameterType="int">
+        SELECT * FROM buginfo WHERE  id = #{0} ORDER by id;
+
+    </select>
+    <select id="getBugInfo2"  parameterType="int">
+          SELECT * FROM buginfo2 WHERE  bug_id_id = #{0} ORDER by bug_id_id;
+
+
+    </select>
+    <select id="getBugsAround" parameterType="com.debugger.pojo.Coordinate" resultType="com.debugger.pojo.BugBasic">
+
+           SELECT
+               bi2.lon lon,
+               bi2.lat lat,
+               ct.arIndex arIndex,
+               bi2.bug_id_id  bugId FROM buginfo2 bi2,content ct WHERE bi2.lifecount>0 and bi2.bug_id_id = ct.bug_id;
+
+
+    </select>
+    <update id="updateBug" parameterType="com.debugger.model.Buginfo2">
+        UPDATE  buginfo2 SET lat = #{lat} ,lon = #{lon} ,lifecount = #{lifecount} WHERE bug_id_id = #{bug_id_id}
+
+    </update>
+
+    <update id="updateLifeCount" parameterType="int">
+        UPDATE  buginfo2 SET  lifecount = lifecount-1 WHERE bug_id_id = #{0}
+
+    </update>
+
+
+</mapper>

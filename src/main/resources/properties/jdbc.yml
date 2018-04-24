@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/learning
+        url: jdbc:mysql://localhost:3306/goldbugtest
         username: root
         password: sDISINI211
         type: com.alibaba.druid.pool.DruidDataSource
